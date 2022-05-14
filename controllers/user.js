@@ -4,7 +4,8 @@ const Order = require('../models/order');
 
 
 
-exports.getUserByid = (req, res, next, id) => {
+exports.getUserById = (req, res, next, id) => {
+  
   User.findById(id).exec((err, user) => {
     if (err || !user) {
       res.status(400).json({
@@ -19,9 +20,9 @@ exports.getUserByid = (req, res, next, id) => {
 exports.getuser = (req, res) => {
   req.profile.salt = undefined
   req.profile.encry_password = undefined
+  console.log(req.profile);
 
   return res.json(req.profile);
-
 }
 
 

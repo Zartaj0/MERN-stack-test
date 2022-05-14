@@ -8,7 +8,8 @@ exports.getCategoryById = (req, res, next, id) => {
                 error: 'no category found'
             })
         }
-        req.category = cate
+         req.category = cate
+
     })
 
     next()
