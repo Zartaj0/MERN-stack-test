@@ -4,15 +4,18 @@ exports.getCategoryById = (req, res, next, id) => {
 
     Category.findById(id).exec((err, cate) => {
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 error: 'no category found'
             })
         }
          req.category = cate
+    next()
 
     })
+}
 
-    next()
+exports.getCategory = (req, res) => {
+    return res.json(req.category);
 }
 
 
@@ -30,9 +33,6 @@ exports.createCategory = (req, res) => {
 }
 
 
-exports.getCategory = (req, res) => {
-    return res.json(req.category)
-}
 
 exports.getAllCategory = (req, res) => {
     Category.find().exec((err, categories) => {
@@ -48,6 +48,19 @@ exports.getAllCategory = (req, res) => {
 
 
 exports.updateCategory = (req,res) => {
+
+    Category.findById(req.params.categoryId).exec((err, cate) => {
+        if (err) {
+            console.log(err);
+            res.status(400).json({
+                error: 'no category found'
+            })
+        }
+        //res.json(cate)
+         req.category = cate
+        //  console.log(req.category)
+
+    })
     const category = req.category;
     category.name = req.body.name;
     category.save((err, data) => {
@@ -56,7 +69,7 @@ exports.updateCategory = (req,res) => {
                 error: "couldn't update category"
             })
         }
-        res.json(category)
+        res.json(data)
     })
 }
 
@@ -74,3 +87,9 @@ exports.removeCategory = (req, res) => {
         })
     })
 }
+
+
+
+
+
+
